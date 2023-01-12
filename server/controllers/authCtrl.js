@@ -31,7 +31,7 @@ const authCtrl = {
             if (validateEmail(account)) {
                 sendEmail(account, url, "Verify your email address.");
                 return res.json({
-                    msg: "Success! Please check your email address.",
+                    msg: "Success! Please check your email for the instructions to confirm your email address.",
                 });
             }
         } catch (err) {
@@ -39,10 +39,11 @@ const authCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-
     activeAccount: async (req, res) => {
         try {
             const { active_token } = req.body;
+
+            console.log(active_token);
 
             const decoded = jwt.verify(
                 active_token,
@@ -55,19 +56,18 @@ const authCtrl = {
                 return res.status(400).json({ msg: "Invalid authentication." });
             }
 
-            const user = new Users(newUser);
+            console.log(newUser);
+            const user = await Users.findOne({ account: newUser.account });
+            if (user) {
+                return res.status(400).json({ msg: "Account already exists." });
+            }
+            const new_user = new Users(newUser);
 
-            await user.save();
+            await new_user.save();
 
             res.json({ msg: "Account has been activated!" });
         } catch (err) {
-            let errMsg;
-            if (err.code === 11000) {
-                errMsg = Object.keys(err.keyValue)[0] + " already exists";
-            } else {
-                console.log(err);
-            }
-            return res.status(500).json({ msg: errMsg });
+            return res.status(500).json({ msg: err.message });
         }
     },
     login: async (req, res) => {
@@ -124,7 +124,7 @@ const authCtrl = {
 
             const access_token = generateAccessToken({ id: user._id });
 
-            res.json({ access_token });
+            res.json({ access_token, user });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

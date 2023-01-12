@@ -3,8 +3,9 @@ import Loading from "./Loading";
 import Backdrop from "@mui/material/Backdrop";
 import { useSelector } from "react-redux";
 import Toast from "./Toast";
+import AlertComponent from "@mui/material/Alert";
 
-const Alert = () => {
+export const Alert = () => {
     const { alert } = useSelector((state) => state);
     return (
         <>
@@ -29,4 +30,10 @@ const Alert = () => {
     );
 };
 
-export default Alert;
+export const showErrMsg = (msg) => {
+    return <AlertComponent severity="error">{msg}</AlertComponent>;
+};
+
+export const showSuccessMsg = (msg) => {
+    return <AlertComponent severity="success">{msg}</AlertComponent>;
+};
