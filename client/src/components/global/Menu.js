@@ -21,7 +21,7 @@ const MenuBar = () => {
 
     const afLoginLinks = [
         { label: "Home", path: "/" },
-        { label: "Create a blog", path: "/create_blog" },
+        { label: "Create", path: "/create_blog" },
     ];
 
     const navLinks = auth.access_token ? afLoginLinks : bfLoginLinks;
@@ -72,7 +72,10 @@ const MenuBar = () => {
                     </Tooltip>
 
                     <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                        <MenuItem component={Link} to="/profile">
+                        <MenuItem
+                            component={Link}
+                            to={`/profile/${auth.user._id}`}
+                        >
                             Profile
                         </MenuItem>
                         <MenuItem
