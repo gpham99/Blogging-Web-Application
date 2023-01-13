@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import NotFound from "../global/NotFound";
 import Box from "@mui/material/Box";
-import { updateUser } from "../../redux/actions/profileAction";
+import { updateUser, resetPassword } from "../../redux/actions/profileAction";
 
 const UserInfo = () => {
     const initState = {
@@ -42,9 +42,12 @@ const UserInfo = () => {
         if (avatar || name) {
             dispatch(updateUser(avatar, name, auth));
         }
+        if (password && auth.access_token) {
+            dispatch(resetPassword(password, cf_password, auth.access_token));
+        }
     };
 
-    const { name, account, avatar, password, cf_password } = user;
+    const { name, avatar, password, cf_password } = user;
 
     if (!auth.user) return <NotFound></NotFound>;
 

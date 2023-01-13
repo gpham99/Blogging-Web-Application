@@ -3,6 +3,7 @@ import { ALERT } from "../types/alertType";
 import { AUTH } from "../types/authType";
 import { checkImage, imageUpload } from "../../utils/ImageUpload";
 import { patchAPI } from "../../utils/FetchData";
+import { checkPassword } from "../../utils/Valid";
 
 export const updateUser = (avatar, name, auth) => async (dispatch) => {
     console.log({ avatar, name, auth });
@@ -49,3 +50,25 @@ export const updateUser = (avatar, name, auth) => async (dispatch) => {
         dispatch({ type: ALERT, payload: { errors: err.response.data.msg } });
     }
 };
+
+export const resetPassword =
+    (password, cf_password, token) => async (dispatch) => {
+        const msg = checkPassword(password, cf_password);
+        if (msg)
+            return dispatch({
+                type: ALERT,
+                payload: { errors: msg },
+            });
+        try {
+            dispatch({ type: ALERT, payload: { loading: true } });
+
+            const res = await patchAPI("reset_password", { password }, token);
+
+            dispatch({ type: ALERT, payload: { success: res.data.msg } });
+        } catch (err) {
+            dispatch({
+                type: ALERT,
+                payload: { errors: err.response.data.msg },
+            });
+        }
+    };

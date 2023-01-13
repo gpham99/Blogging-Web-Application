@@ -20,10 +20,22 @@ export const validRegister = (userRegister) => {
         errors.push("Confirm password did not match.");
     }
 
+    const msg = checkPassword(password, cf_password);
+    if (msg) {
+        errors.push(msg);
+    }
     return {
         errMsg: errors,
         errLength: errors.length,
     };
+};
+
+export const checkPassword = (password, cf_password) => {
+    if (password.length < 6) {
+        return "Password must be at least 6 characters.";
+    } else if (password !== cf_password) {
+        return "Confirm password did not match.";
+    }
 };
 
 export const validateEmail = (email) => {

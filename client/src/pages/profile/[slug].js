@@ -9,8 +9,6 @@ const Profile = () => {
     const { slug } = useParams();
     const { auth } = useSelector((state) => state);
 
-    console.log(slug);
-
     return (
         <div>
             <h2>Profile</h2>
