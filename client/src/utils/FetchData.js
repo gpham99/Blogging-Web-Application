@@ -15,3 +15,11 @@ export const getAPI = async (url, token) => {
 
     return res;
 };
+
+export const patchAPI = async (url, post, token) => {
+    const res = await axios.patch(`/api/${url}`, post, {
+        headers: { Authorization: token },
+    });
+
+    return res;
+};

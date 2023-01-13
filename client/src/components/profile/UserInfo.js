@@ -103,7 +103,7 @@ const UserInfo = () => {
                 >
                     <Box sx={{ p: 1 }}>
                         <TextField
-                            name="namef"
+                            name="name"
                             label="Name"
                             fullWidth
                             defaultValue={auth.user.name}

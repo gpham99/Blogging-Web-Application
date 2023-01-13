@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
 import { ALERT } from "../types/alertType";
+import { AUTH } from "../types/authType";
 import { checkImage, imageUpload } from "../../utils/ImageUpload";
+import { patchAPI } from "../../utils/FetchData";
 
 export const updateUser = (avatar, name, auth) => async (dispatch) => {
     console.log({ avatar, name, auth });
@@ -18,9 +20,31 @@ export const updateUser = (avatar, name, auth) => async (dispatch) => {
             }
 
             const photo = await imageUpload(avatar);
-            console.log(photo);
+            url = photo.url;
         }
-        dispatch({ type: ALERT, payload: { loading: false } });
+
+        dispatch({
+            type: AUTH,
+            payload: {
+                access_token: auth.access_token,
+                user: {
+                    ...auth.user,
+                    avatar: url ? url : auth.user.avatar,
+                    name: name ? name : auth.user.name,
+                },
+            },
+        });
+
+        const res = await patchAPI(
+            "user",
+            {
+                avatar: url ? url : auth.user.avatar,
+                name: name ? name : auth.user.name,
+            },
+            auth.access_token
+        );
+
+        dispatch({ type: ALERT, payload: { success: res.data.msg } });
     } catch (err) {
         dispatch({ type: ALERT, payload: { errors: err.response.data.msg } });
     }
