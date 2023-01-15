@@ -5,11 +5,13 @@ import Header from "./components/global/Header";
 import { Alert } from "./components/alert/Alert";
 import { refreshToken } from "./redux/actions/authAction";
 import { useDispatch } from "react-redux";
+import { getHomeBlogs } from "./redux/actions/blogAction";
 
 const App = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(refreshToken());
+        dispatch(getHomeBlogs());
     }, [dispatch]);
 
     return (

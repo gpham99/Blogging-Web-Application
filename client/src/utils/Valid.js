@@ -45,3 +45,31 @@ export const validateEmail = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 };
+
+export const validCreateBlog = ({ title, content, description, thumbnail }) => {
+    const err = [];
+    if (title.trim().length < 10) {
+        err.push("Title must have at least 10 characters.");
+    } else if (title.trim().length > 50) {
+        err.push("Title can have at most 50 characters.");
+    }
+
+    if (content.trim().length < 2000) {
+        err.push("Content must have at least 2000 characters.");
+    }
+
+    if (description.trim().length < 50) {
+        err.push("Description must have at least 50 characters.");
+    } else if (description.trim().length > 200) {
+        err.push("Description can have at most 200 characters.");
+    }
+
+    if (!thumbnail) {
+        err.push("Thumbnail cannot be blank.");
+    }
+
+    return {
+        errMsg: err,
+        errLength: err.length,
+    };
+};

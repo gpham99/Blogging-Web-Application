@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { ALERT } from "../types/alertType";
 import { AUTH } from "../types/authType";
 import { checkImage, imageUpload } from "../../utils/ImageUpload";

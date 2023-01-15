@@ -3,8 +3,6 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 
@@ -14,7 +12,8 @@ const CardHoriz = ({ blog }) => {
             sx={{
                 display: "flex",
                 minHeight: 150,
-                maxHeight: 170,
+                maxHeight: 220,
+                maxWidth: 500,
             }}
         >
             {blog.thumbnail && (
@@ -23,7 +22,7 @@ const CardHoriz = ({ blog }) => {
                         <Link to={`/blog/${blog.id}`}>
                             <CardMedia
                                 component="img"
-                                sx={{ width: 151 }}
+                                sx={{ width: 150 }}
                                 image={blog.thumbnail}
                                 alt="thumbnail"
                             />
@@ -39,7 +38,7 @@ const CardHoriz = ({ blog }) => {
                 </>
             )}
 
-            <Box sx={{ pl: 2 }}>
+            <Box>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         {blog.title}
@@ -52,7 +51,6 @@ const CardHoriz = ({ blog }) => {
                         variant="caption"
                         color="text.secondary"
                         gutterBottom
-                        sx={{ pt: 10 }}
                     >
                         {new Date(blog.createdAt).toLocaleString()}
                     </Typography>
