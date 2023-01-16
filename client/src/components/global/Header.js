@@ -9,7 +9,7 @@ import MenuBar from "./Menu";
 const Header = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" elevation={0}>
                 <Toolbar>
                     <Typography
                         href="/"

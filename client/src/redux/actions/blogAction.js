@@ -26,10 +26,14 @@ export const createBlog = (blog, token) => async (dispatch) => {
     }
 };
 
-export const getHomeBlogs = () => async (dispatch) => {
+export const getHomeBlogs = (search) => async (dispatch) => {
     try {
         dispatch({ type: ALERT, payload: { loading: true } });
-        const res = await getAPI("home/blogs");
+
+        let value = search ? search : `?page=${1}`;
+
+        const res = await getAPI(`home/blogs${value}`);
+        console.log(res);
 
         dispatch({
             type: GET_HOME_BLOGS,

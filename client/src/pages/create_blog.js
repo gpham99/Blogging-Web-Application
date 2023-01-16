@@ -57,7 +57,6 @@ const CreateBlog = () => {
         <div>
             <Box
                 sx={{
-                    mt: 3,
                     display: "flex",
                     backgroundColor: "black",
                     justifyContent: "center",
@@ -68,7 +67,7 @@ const CreateBlog = () => {
                 <Box
                     sx={{
                         width: { xs: "90%", md: "40%" },
-                        backgroundColor: "white",
+                        backgroundColor: "#f5f5f5",
                         pl: 10,
                         pr: 10,
                         pb: 5,

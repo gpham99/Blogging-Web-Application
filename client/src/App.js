@@ -11,7 +11,7 @@ const App = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(refreshToken());
-        dispatch(getHomeBlogs());
+        // dispatch(getHomeBlogs());
     }, [dispatch]);
 
     return (
