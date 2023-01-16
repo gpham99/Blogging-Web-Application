@@ -33,7 +33,7 @@ export const getHomeBlogs = (search) => async (dispatch) => {
         let value = search ? search : `?page=${1}`;
 
         const res = await getAPI(`home/blogs${value}`);
-        console.log(res);
+        // console.log(res);
 
         dispatch({
             type: GET_HOME_BLOGS,

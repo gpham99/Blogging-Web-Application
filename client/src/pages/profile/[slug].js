@@ -16,7 +16,7 @@ const Profile = () => {
                 {auth.user?._id === slug ? (
                     <UserInfo></UserInfo>
                 ) : (
-                    <OtherInfo></OtherInfo>
+                    <OtherInfo id={slug}></OtherInfo>
                 )}
             </div>
 

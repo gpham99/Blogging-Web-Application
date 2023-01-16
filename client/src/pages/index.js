@@ -23,9 +23,8 @@ const Home = () => {
     const { search } = location;
 
     useEffect(() => {
-        console.log("search: ", search);
         dispatch(getHomeBlogs(search));
-    }, []);
+    }, [dispatch, search]);
 
     if (!blogs) {
         return <Loading></Loading>;

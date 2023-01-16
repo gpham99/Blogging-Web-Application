@@ -14,7 +14,7 @@ const Pagination = ({ total, callback }) => {
 
     useEffect(() => {
         const num = location.search.slice(6) || 1;
-        console.log("slice la gi: ", location.search.slice(6));
+        // console.log("slice la gi: ", location.search.slice(6));
         setPage(Number(num));
     }, [location.search]);
 
