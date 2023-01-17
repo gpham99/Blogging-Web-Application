@@ -1,1 +1,3 @@
 export const GET_HOME_BLOGS = "GET_HOME_BLOGS";
+
+export const GET_BLOGS_USER_ID = "GET_BLOGS_USER_ID";

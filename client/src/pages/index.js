@@ -43,11 +43,11 @@ const Home = () => {
                 pb: 5,
             }}
         >
-            <h3>Home Blogs</h3>
+            <h3>You're one click away from reading something new! </h3>
 
             <Grid container spacing={5}>
                 {blogs?.map((blog) => (
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid key={blog._id} item xs={12} sm={6} md={4}>
                         <CardVert key={blog._id} blog={blog} />
                     </Grid>
                 ))}

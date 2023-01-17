@@ -3,10 +3,12 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 const CardHoriz = ({ blog }) => {
+    const { slug } = useParams();
+
     return (
         <Card
             sx={{
@@ -46,7 +48,12 @@ const CardHoriz = ({ blog }) => {
                     <Typography variant="body2">{blog.description}</Typography>
                 </CardContent>
 
-                <CardContent>
+                <CardContent
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
                     <Typography
                         variant="caption"
                         color="text.secondary"
@@ -54,6 +61,12 @@ const CardHoriz = ({ blog }) => {
                     >
                         {new Date(blog.createdAt).toLocaleString()}
                     </Typography>
+
+                    {slug && (
+                        <Typography variant="caption" gutterBottom>
+                            <Link to={`/update_blog/${blog._id}`}>Update</Link>
+                        </Typography>
+                    )}
                 </CardContent>
             </Box>
         </Card>

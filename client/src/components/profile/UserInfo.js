@@ -56,7 +56,10 @@ const UserInfo = () => {
             <Box
                 px={{ xs: "5%", sm: "15%", md: "25%" }}
                 sx={{ p: 2, backgroundColor: "#f5f5f5" }}
+                textAlign="center"
             >
+                <h3>Basic Information</h3>
+
                 <Box
                     sx={{
                         display: "flex",

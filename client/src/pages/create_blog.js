@@ -6,12 +6,13 @@ import CardHoriz from "../components/cards/CardHoriz";
 import Box from "@mui/material/Box";
 import ReactQuill from "../components/editor/ReactQuill";
 import Button from "@mui/material/Button";
-import { validCreateBlog } from "../utils/Valid";
+import { validCreateBlog, shallowEqual } from "../utils/Valid";
 import { ALERT } from "../redux/types/alertType";
 import { imageUpload } from "../utils/ImageUpload";
-import { createBlog } from "../redux/actions/blogAction";
+import { createBlog, updateBlog } from "../redux/actions/blogAction";
+import { getAPI } from "../utils/FetchData";
 
-const CreateBlog = () => {
+const CreateBlog = ({ id }) => {
     const initState = {
         user: "",
         title: "",
@@ -32,6 +33,27 @@ const CreateBlog = () => {
     const { auth } = useSelector((state) => state);
     const dispatch = useDispatch();
 
+    const [oldData, setOldData] = useState(initState);
+
+    useEffect(() => {
+        if (!id) return;
+        getAPI(`blog/${id}`)
+            .then((res) => {
+                setBlog(res.data);
+                setBody(res.data.content);
+                setOldData(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        return () => {
+            setBlog(initState);
+            setBody("");
+            setOldData(initState);
+        };
+    }, [id]);
+
     useEffect(() => {
         const div = divRef.current;
         if (!div) return;
@@ -47,9 +69,25 @@ const CreateBlog = () => {
             return dispatch({ type: ALERT, payload: { errors: check.errMsg } });
         }
 
-        let newData = { ...blog, content: body };
+        let newData = { ...blog, content: body + "<p><br></p>" };
 
-        dispatch(createBlog(newData, auth.access_token));
+        if (id) {
+            if (blog.user._id !== auth.user?._id)
+                return dispatch({
+                    type: ALERT,
+                    payload: { errors: "Invalid Authentication." },
+                });
+
+            const result = shallowEqual(oldData, newData);
+            if (result)
+                return dispatch({
+                    type: ALERT,
+                    payload: { errors: "The data does not change." },
+                });
+            dispatch(updateBlog(newData, auth.access_token));
+        } else {
+            dispatch(createBlog(newData, auth.access_token));
+        }
     };
 
     if (!auth.access_token) return <NotFound></NotFound>;
@@ -93,7 +131,7 @@ const CreateBlog = () => {
             </Box>
 
             <Box sx={{ pl: 10, pr: 10, pt: 3, pb: 1 }}>
-                <ReactQuill setBody={setBody}></ReactQuill>
+                <ReactQuill setBody={setBody} body={body}></ReactQuill>
             </Box>
 
             <Box
@@ -130,7 +168,7 @@ const CreateBlog = () => {
                     sx={{ textTransform: "none" }}
                     onClick={handleSubmit}
                 >
-                    Create Post
+                    {id ? "Update Post" : "Create Post"}
                 </Button>
             </Box>
         </div>

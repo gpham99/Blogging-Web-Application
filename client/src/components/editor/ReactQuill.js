@@ -5,12 +5,15 @@ import { checkImage, imageUpload } from "../../utils/ImageUpload";
 import { useDispatch } from "react-redux";
 import { ALERT } from "../../redux/types/alertType";
 
-const Quill = ({ setBody }) => {
+const Quill = ({ setBody, body }) => {
     const dispatch = useDispatch();
     const quillRef = useRef(null);
 
     const modules = {
         toolbar: { container },
+        clipboard: {
+            matchVisual: false,
+        },
     };
 
     const handleChangeImage = useCallback(() => {
@@ -70,10 +73,12 @@ const Quill = ({ setBody }) => {
     return (
         <div>
             <ReactQuill
+                value={body}
                 theme="snow"
                 modules={modules}
                 placeholder="Write something"
                 onChange={(e) => {
+                    console.log("this is what populates quill: ", e);
                     setBody(e);
                 }}
                 ref={quillRef}

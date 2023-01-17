@@ -5,8 +5,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const CardVert = ({ blog }) => {
+const CardVertProfile = ({ blog }) => {
+    const { auth } = useSelector((state) => state);
     return (
         <Card>
             <CardActionArea
@@ -25,12 +27,14 @@ const CardVert = ({ blog }) => {
                         alt="thumbnail"
                     />
                 )}
+
                 <CardContent
-                    style={{
+                    sx={{
                         height: 210,
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "space-around",
+                        alignItems: "start",
+                        justifyContent: "space-between",
                     }}
                 >
                     <div style={{ paddingBottom: 10 }}>
@@ -45,8 +49,7 @@ const CardVert = ({ blog }) => {
                     <Typography
                         style={{
                             display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
+                            flexDirection: "column",
                         }}
                     >
                         <small>
@@ -60,6 +63,14 @@ const CardVert = ({ blog }) => {
                         <small>
                             {new Date(blog.createdAt).toLocaleString()}
                         </small>
+
+                        {blog.user?._id === auth.user?._id && (
+                            <small>
+                                <Link to={`/update_blog/${blog._id}`}>
+                                    Update
+                                </Link>
+                            </small>
+                        )}
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -67,4 +78,4 @@ const CardVert = ({ blog }) => {
     );
 };
 
-export default CardVert;
+export default CardVertProfile;
